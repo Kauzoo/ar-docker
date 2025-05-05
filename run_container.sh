@@ -1,2 +1,2 @@
 #!/bin/sh
-docker run -it -v ./:/home/ardocker/ar-workspace/:rw nyr/ar:latest bash
+docker run -it -v ./:/home/ardocker/ar-workspace/:rw kauzoo/ar-docker:latest bash

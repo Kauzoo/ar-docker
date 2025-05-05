@@ -1,2 +1,2 @@
 #!/bin/sh
-docker -build -t nyr/ar .
+docker -build -t kauzoo/ar-docker .
