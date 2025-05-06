@@ -32,7 +32,7 @@ RUN wget -O opencv.zip https://github.com/opencv/opencv/archive/refs/tags/${open
     unzip opencv.zip && unzip opencv_contrib.zip
 # BUILD
 # Configure
-RUN cmake -DOPENCV_EXTRA_MODULES_PATH=/home/ardocker/opencv_contrib-${opencv_version}/modules -DBUILD_LIST=${opencv_build_list} /home/ardocker/opencv-${opencv_version}
+RUN cmake -DOPENCV_EXTRA_MODULES_PATH=/home/ardocker/opencv_contrib-${opencv_version}/modules -DBUILD_LIST=${opencv_build_list} -DWITH_FFMPEG=ON /home/ardocker/opencv-${opencv_version}
  # Build
 RUN cmake --build .
 USER root
