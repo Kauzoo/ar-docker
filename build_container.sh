@@ -1,2 +1,2 @@
 #!/bin/sh
-docker -build -t kauzoo/ar-docker .
+docker build -t kauzoo/ar-docker .
