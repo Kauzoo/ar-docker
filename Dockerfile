@@ -51,9 +51,10 @@ COPY --from=builder /usr/local/lib /usr/lib
 RUN useradd -m ardocker
 USER ardocker
 WORKDIR /home/ardocker
-RUN mkdir -p opencv/lib && mkdir -p opencv/include && mkdir godot && \
-    echo 'cp /usr/lib/libopencv_* /home/ardocker/ar-workspace/${gdproj_name}/bin/' > copy_libs.sh && \
-    chmod +x copy_libs.sh
+RUN mkdir scripts && mkdir godot
+RUN echo "#!/bin/bash" > copylibs.sh && \
+    echo -n "cp -r /usr/lib/libopencv_* /workspaces/opencv_libs/" >> copylibs.sh && \
+    
 ENV PATH=$PATH:/home/ardocker/godot
 # Copy over godot and cpp bindings from previous build stage
 COPY --from=builder /home/ardocker/godot /home/ardocker/godot/
@@ -61,4 +62,4 @@ COPY --from=builder /home/ardocker/godot-cpp /home/ardocker/godot-cpp
 WORKDIR /home/ardocker/ar-workspace/
 USER root
 #ENTRYPOINT [ "/bin/bash" ]
-#CMD [ "/home/ardocker/copy_libs.sh" ]
+CMD [ "" ]
