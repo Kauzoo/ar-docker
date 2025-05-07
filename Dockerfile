@@ -59,9 +59,9 @@ RUN mkdir scripts && mkdir godot && mkdir export && mkdir export/opencv && \
 COPY --from=builder /home/ardocker/godot /home/ardocker/godot/
 COPY --from=builder /home/ardocker/godot-cpp /home/ardocker/export/godot-cpp
 COPY --from=builder /usr/local/include/opencv4/ /home/ardocker/export/opencv/include
-COPY --from=builder /usr/local/lib/libopencv_* /home/ardocker/export/opencv/lib
-COPY --chown=ardocker:ardocker --chmod=+x ./include/scripts/*.sh /home/ardocker/scripts
+COPY --from=builder /usr/local/lib/libopencv_* /home/ardocker/export/opencv/lib/
+COPY ./include/scripts/*.sh /home/ardocker/scripts/
 ENV PATH=$PATH:/home/ardocker/godot
-USER root
+USER root  
 #ENTRYPOINT [ "/bin/bash" ]
 #CMD [ "" ]
