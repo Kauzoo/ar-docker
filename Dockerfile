@@ -4,7 +4,6 @@ ARG opencv_version=4.9.0
 ARG godot_version=4.4-stable
 ARG gd_cpp_version=4.4
 ARG opencv_build_list=core,imgcodecs,imgproc,videoio,objdetect,video,tracking
-ARG gdproj_name=demo
 
 # Update & Install dependencies for opencv, godot
 RUN apt update
@@ -43,26 +42,26 @@ RUN make install
 USER ardocker
 WORKDIR /home/ardocker
 
-
 # STAGE 2
 FROM ubuntu:latest
 RUN apt update && \
-    apt install -y g++ scons nano
+    apt install -y g++ scons nano git
 # Copy over opencv headers and libs from previous build stage
 COPY --from=builder /usr/local/include/opencv4/ /usr/local/include
 COPY --from=builder /usr/local/lib /usr/lib
 RUN useradd -m ardocker
 USER ardocker
 WORKDIR /home/ardocker
-RUN mkdir scripts && mkdir godot
-RUN echo "#!/bin/bash" > copylibs.sh && \
-    echo -n "cp -r /usr/lib/libopencv_* /workspaces/opencv_libs/" >> copylibs.sh && \
-    
-ENV PATH=$PATH:/home/ardocker/godot
+RUN mkdir scripts && mkdir godot && mkdir export && mkdir export/opencv && \
+    mkdir export/opencv/lib && mkdir export/opencv/include
+
 # Copy over godot and cpp bindings from previous build stage
 COPY --from=builder /home/ardocker/godot /home/ardocker/godot/
-COPY --from=builder /home/ardocker/godot-cpp /home/ardocker/godot-cpp
-WORKDIR /home/ardocker/ar-workspace/
+COPY --from=builder /home/ardocker/godot-cpp /home/ardocker/export/godot-cpp
+COPY --from=builder /usr/local/include/opencv4/ /home/ardocker/export/opencv/include
+COPY --from=builder /usr/local/lib/libopencv_* /home/ardocker/export/opencv/lib
+COPY --chown=ardocker:ardocker --chmod=+x ./include/scripts/*.sh /home/ardocker/scripts
+ENV PATH=$PATH:/home/ardocker/godot
 USER root
 #ENTRYPOINT [ "/bin/bash" ]
-CMD [ "" ]
+#CMD [ "" ]

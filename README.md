@@ -15,4 +15,4 @@ OpenCV is built from source, only modules required for lecture and dependencies.
 - godot_version=4.4-stable
 - gd_cpp_version=4.4
 - opencv_build_list=core,imgcodecs,imgproc,videoio,objdetect,video,tracking
-> `$ docker build --build-arg opencv_version=`
+> `$ docker build --build-arg opencv_version=4.9.0 --build-arg godot_version=4.4-stable --build-arg gd_cpp_version=4.4 --build-arg opencv_build_list=core,imgcodecs,imgproc,videoio,objdetect,video,tracking .`
