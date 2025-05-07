@@ -30,7 +30,7 @@ cmake -DOPENCV_EXTRA_MODULES_PATH=path/to/opencv_contrib-\<version>/modules -DBU
 cmake -DOPENCV_EXTRA_MODULES_PATH=../opencv_contrib-4.9.0/modules -DBUILD_LIST=core,imgcodecs,imgproc,videoio,objdetect,video,tracking -DWITH_FFMPEG=ON -DVIDEOIO_PLUGIN_LIST=ffmpeg ../opencv-4.9.0
 ```
 ## Docker
-Get Docker Image
+Download the docker image
 ```  
 docker pull kauzoo/ar-docker:latest  
 ```
@@ -89,4 +89,4 @@ $ docker build --build-arg opencv_version=4.9.0 --build-arg godot_version=4.4-st
 ```
 
 ## Troubleshooting
-- If godot produces the `Couldn't open camera.` error ffmpeg is proabably not enables as backend
+- If godot produces the `Couldn't open camera.` error ffmpeg is proabably not enabled as a backend
