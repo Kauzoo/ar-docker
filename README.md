@@ -74,6 +74,9 @@ If you just want to export all relevant files you can use the `export.sh` script
 - opencv-libs (*.so): -> `./ar-docker-export/opencv/lib`
 - opencv-headers: -> `./ar-docker-export/opencv/include`
 - godot-cpp: -> `./ar-docker-export/godo-cpp`
+```
+chmod +x ./export.sh && ./export.sh
+```
 
 
 ### Build Custom Version
@@ -85,7 +88,7 @@ If you just want to export all relevant files you can use the `export.sh` script
 
 **Example Usage**
 ```
-$ docker build --build-arg opencv_version=4.9.0 --build-arg godot_version=4.4-stable --build-arg gd_cpp_version=4.4 --build-arg opencv_build_list=core,imgcodecs,imgproc,videoio,objdetect,video,tracking .
+docker build --build-arg opencv_version=4.9.0 --build-arg godot_version=4.4-stable --build-arg gd_cpp_version=4.4 --build-arg opencv_build_list=core,imgcodecs,imgproc,videoio,objdetect,video,tracking .
 ```
 
 ## Troubleshooting
