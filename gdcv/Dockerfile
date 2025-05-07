@@ -42,27 +42,3 @@ USER root
 RUN make install
 USER ardocker
 WORKDIR /home/ardocker
-
-
-# STAGE 2
-FROM ubuntu:latest
-RUN apt update && \
-    apt install -y g++ scons nano
-# Copy over opencv headers and libs from previous build stage
-COPY --from=builder /usr/local/include/opencv4/ /usr/local/include
-COPY --from=builder /usr/local/lib /usr/lib
-RUN useradd -m ardocker
-USER ardocker
-WORKDIR /home/ardocker
-RUN mkdir scripts && mkdir godot
-RUN echo "#!/bin/bash" > copylibs.sh && \
-    echo -n "cp -r /usr/lib/libopencv_* /workspaces/opencv_libs/" >> copylibs.sh && \
-    
-ENV PATH=$PATH:/home/ardocker/godot
-# Copy over godot and cpp bindings from previous build stage
-COPY --from=builder /home/ardocker/godot /home/ardocker/godot/
-COPY --from=builder /home/ardocker/godot-cpp /home/ardocker/godot-cpp
-WORKDIR /home/ardocker/ar-workspace/
-USER root
-#ENTRYPOINT [ "/bin/bash" ]
-CMD [ "" ]
