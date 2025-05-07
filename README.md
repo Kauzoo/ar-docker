@@ -22,14 +22,17 @@ If your distribution of choice does not have opencv in its repositories you have
 - Enable ffmpeg video backend: `-DWITH_FFMPEG=ON`
 - Enable dynamically linked ffmpeg: `-DWITH_FFMPEG=ON -DVIDEOIO_PLUGIN_LIST=ffmpeg` 
 - Inside your build directory
-    >`cmake -DOPENCV_EXTRA_MODULES_PATH=path/to/opencv_contrib-\<version>/modules -DBUILD_LIST=\<module-list> -DWITH_FFMPEG=ON \<-DVIDEOIO_PLUGIN_LIST=ffmpeg> path/to/opencv-\<verison>`
+```
+cmake -DOPENCV_EXTRA_MODULES_PATH=path/to/opencv_contrib-\<version>/modules -DBUILD_LIST=\<module-list> -DWITH_FFMPEG=ON \<-DVIDEOIO_PLUGIN_LIST=ffmpeg> path/to/opencv-\<verison>
+```
 - Exmaple Usage
-    > `cmake -DOPENCV_EXTRA_MODULES_PATH=../opencv_contrib-4.9.0/modules -DBUILD_LIST=core,imgcodecs,imgproc,videoio,objdetect,video,tracking -DWITH_FFMPEG=ON -DVIDEOIO_PLUGIN_LIST=ffmpeg ../opencv-4.9.0`
-
+```
+cmake -DOPENCV_EXTRA_MODULES_PATH=../opencv_contrib-4.9.0/modules -DBUILD_LIST=core,imgcodecs,imgproc,videoio,objdetect,video,tracking -DWITH_FFMPEG=ON -DVIDEOIO_PLUGIN_LIST=ffmpeg ../opencv-4.9.0
+```
 ## Docker
 Get Docker Image
 ```  
-$ docker pull kauzoo/ar-docker:latest  
+docker pull kauzoo/ar-docker:latest  
 ```
 OpenCV is built from source, using only modules required for lecture and dependencies. Ffmpeg is used as dynamicaly linked VideoIO backend (libopencv_videoio_ffmpeg.so). Versions and module list can be tweaked using docker build-arguments (See [build](#build-for-custom-version)).    
 - OpenCV-version: 4.9.0 (default)
@@ -42,23 +45,29 @@ OpenCV is built from source, using only modules required for lecture and depende
 ### Devcontainer
 You can use the docker container as your development environment for compilation and code editing. The godot editor should be run on your host machine (running it inside the container doesn't work properly). The `.devcontainer.json` file can be copied into the root of your project (next to sourcecode src/ and godotproject (probably demo) directory) to set your project up as a vscode dev container. Open your project folder with vscode and you should be prompted to *Reopen in Container*.
 1. Pull docker image  
-
-    > `$ docker pull kauzoo/ar-docker:latest`
-1. In `.devcontainer.json` adjust 
+```
+docker pull kauzoo/ar-docker:latest
+```
+2. In `.devcontainer.json` adjust 
     - `WORKSPACE_FOLDER` = project directory
     - `GODOT_PROJECT_NAME` = godot project directory (contains project.godot)
 
-1. Copy `.devcontainer.json` to the root folder of your project (next to the `SConstruct` file etc.)
-1. Open the project folder in vscode
-1. Run `>Dev Containers: Reopen in Container` (`Ctrl+Shift+P`)
-1. (First Usage) Copy godot-cpp to your project
-    > `cp -r /home/ardocker/export/godot-cpp "/workspaces/$WORKSPACE_FOLDER/godot-cpp"`
-    
-1. (First Usage) Copy libs to your project
-    > `$ cp -r /usr/lib/libopencv_* "/workspaces/"$WORKSPACE_FOLDER/$GODOT_PROJECT_NAME/bin/` 
-1. Build from inside the container
-    > `$ scons platform=linux`
-1. On Host machine: Open godot project like usual
+2. Copy `.devcontainer.json` to the root folder of your project (next to the `SConstruct` file etc.)
+3. Open the project folder in vscode
+4. Run `>Dev Containers: Reopen in Container` (`Ctrl+Shift+P`)
+5. (First Usage) Copy godot-cpp to your project
+```
+cp -r /home/ardocker/export/godot-cpp "/workspaces/$WORKSPACE_FOLDER/godot-cpp"
+``` 
+6. (First Usage) Copy libs to your project
+```
+cp -r /usr/lib/libopencv_* "/workspaces/"$WORKSPACE_FOLDER/$GODOT_PROJECT_NAME/bin/
+```
+7. Build from inside the container
+```
+scons platform=linux
+```
+8. On Host machine: Open godot project like usual
 
 ### Exporting
 If you just want to export all relevant files you can use the `export.sh` script. The latest version of the image will be pulled with default settings and the files will be exported. (**Hint:** Docker must be installed).
@@ -75,8 +84,9 @@ If you just want to export all relevant files you can use the `export.sh` script
 - opencv_build_list=core,imgcodecs,imgproc,videoio,objdetect,video,tracking
 
 **Example Usage**
-> `$ docker build --build-arg opencv_version=4.9.0 --build-arg godot_version=4.4-stable --build-arg gd_cpp_version=4.4 --build-arg opencv_build_list=core,imgcodecs,imgproc,videoio,objdetect,video,tracking .`
-
+```
+$ docker build --build-arg opencv_version=4.9.0 --build-arg godot_version=4.4-stable --build-arg gd_cpp_version=4.4 --build-arg opencv_build_list=core,imgcodecs,imgproc,videoio,objdetect,video,tracking .
+```
 
 ## Troubleshooting
 - If godot produces the `Couldn't open camera.` error ffmpeg is proabably not enables as backend
